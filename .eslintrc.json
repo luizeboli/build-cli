@@ -2,5 +2,11 @@
   "extends": ["airbnb-base", "plugin:prettier/recommended"],
   "env": {
     "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "rules": {
+    "import/extensions": "off"
   }
 }
