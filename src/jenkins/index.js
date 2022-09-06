@@ -83,7 +83,8 @@ class Jenkins {
     spinner.start()
 
     const promise = async () => {
-      const res = await fetch(`/job/${this.jenkinsJob}/${this.buildId}/api/json?tree=result,id`)
+      const url = `/job/${this.jenkinsJob}/${this.buildId}`
+      const res = await fetch(`${url}/api/json?tree=result,id`)
       const result = await res.json()
 
       if (result.result === 'SUCCESS') {
@@ -93,7 +94,7 @@ class Jenkins {
 
       if (['FAILURE', 'ABORTED'].includes(result.result)) {
         const isFailure = result.result === 'FAILURE'
-        spinner.fail(`Build has been ${isFailure ? 'failed' : result.result.toLowerCase()}...`)
+        spinner.fail(`Build has been ${isFailure ? 'failed' : result.result.toLowerCase()}...\n  ${url}`)
         throw new Error('Something wrong happened to the build... Go check!')
       }
 
