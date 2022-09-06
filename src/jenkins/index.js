@@ -94,7 +94,11 @@ class Jenkins {
 
       if (['FAILURE', 'ABORTED'].includes(result.result)) {
         const isFailure = result.result === 'FAILURE'
-        spinner.fail(`Build has been ${isFailure ? 'failed' : result.result.toLowerCase()}...\n  ${url}`)
+        spinner.fail(
+          `Build has been ${isFailure ? 'failed' : result.result.toLowerCase()}...\n  Link: ${
+            config.jenkins.baseUrl
+          }${url}`,
+        )
         throw new Error('Something wrong happened to the build... Go check!')
       }
 
