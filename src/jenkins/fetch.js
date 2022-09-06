@@ -1,17 +1,16 @@
 import nodeFetch from 'node-fetch'
 import { oraPromise } from 'ora'
+import config from '../config/index.js'
 
 const fetch = (url, options = {}) => {
-  const useBaseUrl = !url.startsWith(process.env.JENKINS_BASE_URL)
-  const urlToFetch = useBaseUrl ? `${process.env.JENKINS_BASE_URL}${url}` : url
+  const useBaseUrl = !url.startsWith(config.jenkins.baseUrl)
+  const urlToFetch = useBaseUrl ? `${config.jenkins.baseUrl}${url}` : url
 
   return nodeFetch(urlToFetch, {
     ...options,
     headers: {
       ...(options?.headers || {}),
-      Authorization: `Basic ${Buffer.from(`${process.env.JENKINS_USER}:${process.env.JENKINS_USER_PASS}`).toString(
-        'base64',
-      )}`,
+      Authorization: `Basic ${Buffer.from(`${config.jenkins.user}:${config.jenkins.password}`).toString('base64')}`,
     },
   })
 }

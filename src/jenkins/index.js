@@ -4,6 +4,7 @@ import ora from 'ora'
 import fetch, { fetchWithTimeout } from './fetch.js'
 import timeout from '../utils/timeout.js'
 import REPOSITORIES from '../constants/repositories.js'
+import config from '../config/index.js'
 
 class Jenkins {
   constructor(answers) {
@@ -14,7 +15,7 @@ class Jenkins {
 
   static async #connectToJenkins() {
     await fetchWithTimeout({
-      url: process.env.JENKINS_HEALTH_CHECK_PATH,
+      url: config.jenkins.healthCheck,
       oraOptions: {
         text: 'Trying to connect to Jenkins.',
         failText: chalk.red('Could not connect to Jenkins. Maybe you are not connected to the VPN?'),
