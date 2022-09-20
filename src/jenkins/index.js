@@ -5,10 +5,11 @@ import fetch, { fetchWithTimeout } from './fetch.js'
 import timeout from '../utils/timeout.js'
 import REPOSITORIES from '../constants/repositories.js'
 import config from '../config/index.js'
+import addNewLine from '../utils/addNewLine.js'
 
 class Jenkins {
   constructor(answers) {
-    this.repository = answers.repositoryToBuild
+    this.repository = answers.repository
     this.branch = answers.jenkinsParameterBranch
     this.jenkinsJob = REPOSITORIES.get(this.repository).jenkinsJob
   }
@@ -108,6 +109,43 @@ class Jenkins {
 
     const response = await promise()
     return response
+  }
+
+  async printLastSuccessfulBuild() {
+    const spinner = ora('Checking for last sucessful build...').start()
+
+    try {
+      await Jenkins.#connectToJenkins()
+
+      const url = `/job/${this.jenkinsJob}/lastSuccessfulBuild/api/json`
+      const response = await fetch(url)
+      const data = await response.json()
+      spinner.succeed('Retrieved last successful build...')
+      addNewLine()
+
+      const actionCauses = data.actions.find((action) => !!action.causes)
+      const actionParameter = data.actions.find((action) => !!action.parameters)
+
+      console.log(chalk.blue('Build id:'), chalk.blueBright(`#${data.id}`))
+      console.log(chalk.blue('Build url:'), chalk.blueBright(data.url))
+      addNewLine()
+
+      actionCauses.causes.forEach((cause) => {
+        console.log(`${chalk.blueBright(cause.shortDescription)}\r`)
+        console.log(chalk.blueBright(cause.userId))
+        addNewLine()
+      })
+      actionParameter.parameters.forEach((parameter) => {
+        console.log(chalk.blue('Parameter:\r'))
+        console.log(chalk.blueBright(`${parameter.name}: ${parameter.value}`))
+        addNewLine()
+      })
+    } catch (error) {
+      console.log(error, 'Uncaught error when checking last successful build')
+
+      spinner.fail()
+      process.exit(1)
+    }
   }
 
   async start() {

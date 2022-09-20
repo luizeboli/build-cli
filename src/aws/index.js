@@ -19,7 +19,7 @@ import addNewLine from '../utils/addNewLine.js'
 
 class AWS {
   constructor(answers) {
-    this.pipelineName = REPOSITORIES.get(answers.repositoryToBuild).pipelineName
+    this.pipelineName = REPOSITORIES.get(answers.repository).pipelineName
   }
 
   async #checkPipelineStarted() {

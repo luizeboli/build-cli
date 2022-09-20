@@ -21,7 +21,28 @@ inquirer
   .ui.process.pipe(tap(updateAnswers))
   .subscribe({
     next: (answer) => {
-      if (answer.name === 'repositoryToBuild') {
+      if (answer.name === 'operation') {
+        if (answer.answer === 'Get last sucessful build') {
+          prompts.next({
+            name: 'repository',
+            message: 'From which repository?',
+            type: 'list',
+            choices: Array.from(REPOSITORIES.keys()),
+          })
+          prompts.complete()
+        }
+
+        if (answer.answer === 'Create a build') {
+          prompts.next({
+            name: 'repository',
+            message: 'Which repository do you want to build?',
+            type: 'list',
+            choices: Array.from(REPOSITORIES.keys()),
+          })
+        }
+      }
+
+      if (answer.name === 'repository' && answers.operation === 'Create a build') {
         const { jenkinsParameters, hasAwsPipeline } = REPOSITORIES.get(answer.answer)
 
         jenkinsParameters?.forEach((parameter) => {
@@ -39,32 +60,38 @@ inquirer
             type: 'list',
           })
         }
-      }
 
-      prompts.complete()
+        prompts.complete()
+      }
     },
     complete: async () => {
       addNewLine()
 
+      const jenkins = new Jenkins(answers)
+      const aws = new AWS(answers)
+
+      if (answers.operation === 'Get last sucessful build') {
+        await jenkins.printLastSuccessfulBuild()
+        return
+      }
+
       const trackJenkins =
-        ['Jenkins', 'Both'].includes(answers.trackBuild) || !REPOSITORIES.get(answers.repositoryToBuild).hasAwsPipeline
+        ['Jenkins', 'Both'].includes(answers.trackBuild) || !REPOSITORIES.get(answers.repository)?.hasAwsPipeline
       const trackAws = ['AWS', 'Both'].includes(answers.trackBuild)
 
       if (trackJenkins) {
-        const jenkins = new Jenkins(answers)
         await jenkins.start()
       }
 
       if (trackAws) {
-        const aws = new AWS(answers)
         await aws.start()
       }
     },
   })
 
 prompts.next({
-  name: 'repositoryToBuild',
-  message: 'Which repository do you want to build?',
+  name: 'operation',
+  message: 'What do you want to do?',
   type: 'list',
-  choices: Array.from(REPOSITORIES.keys()),
+  choices: ['Create a build', 'Get last sucessful build'],
 })
