@@ -137,7 +137,8 @@ class Jenkins {
         addNewLine()
       })
       actionParameter.parameters.forEach((parameter) => {
-        console.log(chalk.blue('Parameter:\r'), chalk.blueBright(`${parameter.name}: ${parameter.value}`))
+        console.log(chalk.blue('Parameter:\r'))
+        console.log(chalk.blueBright(`${parameter.name.trim()}: ${parameter.value}`))
         addNewLine()
       })
     } catch (error) {
