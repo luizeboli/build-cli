@@ -128,16 +128,16 @@ class Jenkins {
 
       console.log(chalk.blue('Build id:'), chalk.blueBright(`#${data.id}`))
       console.log(chalk.blue('Build url:'), chalk.blueBright(data.url))
+      console.log(chalk.blue('Date:'), chalk.blueBright(new Date(data.timestamp)))
       addNewLine()
 
       actionCauses.causes.forEach((cause) => {
         console.log(`${chalk.blueBright(cause.shortDescription)}\r`)
-        console.log(chalk.blueBright(cause.userId))
+        if (cause.userId) console.log(chalk.blueBright(cause.userId))
         addNewLine()
       })
       actionParameter.parameters.forEach((parameter) => {
-        console.log(chalk.blue('Parameter:\r'))
-        console.log(chalk.blueBright(`${parameter.name}: ${parameter.value}`))
+        console.log(chalk.blue('Parameter:\r'), chalk.blueBright(`${parameter.name}: ${parameter.value}`))
         addNewLine()
       })
     } catch (error) {

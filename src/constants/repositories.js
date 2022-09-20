@@ -18,6 +18,21 @@ const REPOSITORIES = new Map([
       hasAwsPipeline: true,
     },
   ],
+  [
+    'ticket',
+    {
+      jenkinsJob: 'ticket_Deploy_RC',
+      jenkinsParameters: ['Branch'],
+      hasAwsPipeline: false,
+    },
+  ],
+  [
+    'ticket-ui',
+    {
+      jenkinsJob: 'TicketUIServices_Deploy_RC',
+      jenkinsParameters: ['Branch', 'RunTests', 'Machine'],
+    },
+  ],
 ])
 
 export default REPOSITORIES
