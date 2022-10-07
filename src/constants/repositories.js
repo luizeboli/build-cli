@@ -19,6 +19,15 @@ const REPOSITORIES = new Map([
     },
   ],
   [
+    'static-history',
+    {
+      jenkinsJob: 'static-history_Deploy_RC_ECS',
+      jenkinsParameters: ['Branch'],
+      hasAwsPipeline: true,
+      pipelineName: 'StaticHistory-pipeline-qa-Pipeline',
+    },
+  ],
+  [
     'ticket',
     {
       jenkinsJob: 'ticket_Deploy_RC',
