@@ -153,7 +153,7 @@ class AWS {
           stdio: 'inherit',
         },
       )
-      spinner.succeed('Revalited AWS credentials...')
+      spinner.succeed('Revalidated AWS credentials...')
     } catch (error) {
       spinner.fail('Could not revalidate AWS credentials...')
       console.log(error, 'Error while revalidating token...')
