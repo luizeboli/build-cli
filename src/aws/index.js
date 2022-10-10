@@ -10,6 +10,7 @@ import { differenceInSeconds } from 'date-fns'
 import ora from 'ora'
 import { STSClient, GetCallerIdentityCommand, GetSessionTokenCommand } from '@aws-sdk/client-sts'
 import { execSync } from 'node:child_process'
+import notifier from 'node-notifier'
 
 import inquirer from 'inquirer'
 import timeout from '../utils/timeout.js'
@@ -118,6 +119,11 @@ class AWS {
 
     const result = await promise()
     spinner.succeed('Pipeline finished...')
+    notifier.notify({
+      title: 'Hi Build - AWS',
+      message: 'Pipeline finished!',
+      sound: true,
+    })
     return result
   }
 
@@ -210,6 +216,11 @@ class AWS {
       if (error.__type === 'AccessDeniedException') {
         console.log(error.message, 'Access Denied')
       }
+
+      notifier.notify({
+        title: 'Hi Build - AWS',
+        message: `Something went wrong!`,
+      })
 
       process.exit(1)
     }

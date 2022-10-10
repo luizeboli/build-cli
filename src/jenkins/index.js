@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import ora from 'ora'
+import notifier from 'node-notifier'
 
 import fetch, { fetchWithTimeout } from './fetch.js'
 import timeout from '../utils/timeout.js'
@@ -90,6 +91,11 @@ class Jenkins {
 
       if (result.result === 'SUCCESS') {
         spinner.succeed('Build completed...')
+        notifier.notify({
+          title: 'Hi Build - Jenkins',
+          message: `Build completed successfully!`,
+          sound: true,
+        })
         return result
       }
 
@@ -161,6 +167,12 @@ class Jenkins {
       }
 
       console.log(error, 'Uncaught error')
+
+      notifier.notify({
+        title: 'Hi Build - Jenkins',
+        message: `Something went wrong!`,
+        sound: true,
+      })
 
       process.exit(1)
     }
