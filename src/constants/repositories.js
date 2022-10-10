@@ -28,6 +28,15 @@ const REPOSITORIES = new Map([
     },
   ],
   [
+    'static-status-report',
+    {
+      jenkinsJob: 'static-status-report_Deploy_RC_S3',
+      jenkinsParameters: ['Branch'],
+      hasAwsPipeline: true,
+      pipelineName: 'StaticStatusReport-pipeline-qa-Pipeline',
+    },
+  ],
+  [
     'ticket',
     {
       jenkinsJob: 'ticket_Deploy_RC',
