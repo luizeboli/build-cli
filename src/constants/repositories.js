@@ -19,6 +19,15 @@ const REPOSITORIES = new Map([
     },
   ],
   [
+    'static-ticket-email-formatter',
+    {
+      jenkinsJob: 'static-ticket-email-formatter_Deploy_RC_S3',
+      jenkinsParameters: ['Branch'],
+      pipelineName: 'StaticTicketEmailFormatter-pipeline-qa-Pipeline',
+      hasAwsPipeline: true,
+    },
+  ],
+  [
     'static-history',
     {
       jenkinsJob: 'static-history_Deploy_RC_ECS',
