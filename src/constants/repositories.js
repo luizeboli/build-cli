@@ -1,5 +1,5 @@
 const REPOSITORIES = new Map([
-  ['static', { jenkinsJob: 'static-Deploy_RC', jenkinsParameters: ['Branch'], hasAwsPipeline: false }],
+  ['static', { jenkinsJob: 'static-Deploy_RC', jenkinsParameters: ['Branch', 'Machine'], hasAwsPipeline: false }],
   ['static-ticket', { jenkinsJob: 'static-ticket_Deploy_RC', jenkinsParameters: ['Branch'], hasAwsPipeline: false }],
   [
     'static-mail-accounts',
