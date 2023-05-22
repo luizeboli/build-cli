@@ -12,6 +12,7 @@ class Jenkins {
   constructor(answers) {
     this.repository = answers.repository
     this.branch = answers.jenkinsParameterBranch
+    this.machine = answers.jenkinsParameterMachine
     this.jenkinsJob = REPOSITORIES.get(this.repository).jenkinsJob
   }
 
@@ -29,6 +30,7 @@ class Jenkins {
   async #createNewBuild() {
     const buildParams = new URLSearchParams()
     buildParams.append('Branch', this.branch)
+    if (this.machine) buildParams.append('Machine', this.machine)
     const createdBuild = await fetchWithTimeout({
       url: `/job/${this.jenkinsJob}/buildWithParameters`,
       fetchOptions: {

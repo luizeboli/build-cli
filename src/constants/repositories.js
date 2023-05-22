@@ -38,6 +38,15 @@ const REPOSITORIES = new Map([
     },
   ],
   [
+    'static-history-playground',
+    {
+      jenkinsJob: 'static-history-playground_Deploy_RC_S3',
+      jenkinsParameters: ['Branch'],
+      hasAwsPipeline: true,
+      pipelineName: 'StaticHistoryPlayground-pipeline-qa-Pipeline',
+    },
+  ],
+  [
     'static-status-report',
     {
       jenkinsJob: 'static-status-report_Deploy_RC_S3',
@@ -59,6 +68,24 @@ const REPOSITORIES = new Map([
     {
       jenkinsJob: 'TicketUIServices_Deploy_RC',
       jenkinsParameters: ['Branch', 'RunTests', 'Machine'],
+    },
+  ],
+  [
+    'static-agent-contact',
+    {
+      jenkinsJob: 'static-agent-contact_Deploy_RC_S3',
+      jenkinsParameters: ['Branch'],
+      pipelineName: 'StaticAgentContact-pipeline-qa-Pipeline',
+      hasAwsPipeline: true,
+    },
+  ],
+  [
+    'static-chat-agent',
+    {
+      jenkinsJob: 'static-novoChatAgent_Deploy_RC_ECS',
+      jenkinsParameters: ['Branch', 'ECSClusterName'],
+      pipelineName: 'StaticChatAgent-pipeline-qa-Pipeline',
+      hasAwsPipeline: true,
     },
   ],
 ])
