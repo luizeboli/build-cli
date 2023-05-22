@@ -5,7 +5,7 @@
   "description": "",
   "main": "src/index.js",
   "bin": {
-    "hi-build": "src/index.js"
+    "hi-build": "./src/index.js"
   },
   "scripts": {
     "start": "nodemon src/index.js"
