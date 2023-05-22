@@ -1,5 +1,5 @@
 const REPOSITORIES = new Map([
-  ['static', { jenkinsJob: 'static-Deploy_RC', jenkinsParameters: ['Branch', 'Machine'], hasAwsPipeline: false }],
+  ['static', { jenkinsJob: 'static_Deploy_RC', jenkinsParameters: ['Branch', 'Machine'], hasAwsPipeline: false }],
   ['static-ticket', { jenkinsJob: 'static-ticket_Deploy_RC', jenkinsParameters: ['Branch'], hasAwsPipeline: false }],
   [
     'static-mail-accounts',
@@ -25,6 +25,15 @@ const REPOSITORIES = new Map([
       jenkinsJob: 'static-ticket-email-formatter_Deploy_RC_S3',
       jenkinsParameters: ['Branch'],
       pipelineName: 'StaticTicketEmailFormatter-pipeline-qa-Pipeline',
+      hasAwsPipeline: true,
+    },
+  ],
+  [
+    'static-ticket-permissions',
+    {
+      jenkinsJob: 'static-ticket-permissions_Deploy_RC_S3',
+      jenkinsParameters: ['Branch'],
+      pipelineName: 'StaticTicketPermissions-pipeline-qa-Pipeline',
       hasAwsPipeline: true,
     },
   ],
